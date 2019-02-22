@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
  */
 
 @Component
-@Profile({"prod", "test"})
+@Profile({"producao", "test"})
 class NoiseSourceComScirePQ32MS implements INoiseSource {
 
     @Value("${beacon.entropy.command}")
@@ -23,10 +23,11 @@ class NoiseSourceComScirePQ32MS implements INoiseSource {
     public String getNoise512Bits() throws IOException, InterruptedException {
         String s = "";
 
+        System.out.println("----------------------------------------------------------------------");
+
         try {
 
             System.out.println("Commando: " + command);
-
             Process p = Runtime.getRuntime().exec(command);
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -36,10 +37,14 @@ class NoiseSourceComScirePQ32MS implements INoiseSource {
 //            System.out.println("Here is the standard output of the command:\n");
             int linha = 1;
             while ((s = stdInput.readLine()) != null) {
-                if (linha == 58){
-                    return s;
-                }
 
+                System.out.println("---------------------------------");
+                System.out.println(s);
+                System.out.println("Numero:" + s.replaceAll(" ", ""));
+
+                if (linha == 58){
+                    return s.replaceAll(" ", "");
+                }
             }
 
             // read any errors from the attempted command
