@@ -1,33 +1,45 @@
-package br.gov.inmetro.beacon.input.repository;
+package br.gov.inmetro.beacon.input.noise;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-@Component
 /*
     https://crunchify.com/how-to-run-windowsmac-commands-in-java-and-return-the-text-result/
  */
 
-public class Noises {
+@Component
+@Profile({"prod", "test"})
+class NoiseSourceComScirePQ32MS implements INoiseSource {
 
-    public String getNoise() throws IOException, InterruptedException {
+    @Value("${beacon.entropy.command}")
+    private String command;
 
+    @Override
+    public String getNoise512Bits() throws IOException, InterruptedException {
         String s = "";
 
         try {
 
-            Process p = Runtime.getRuntime().exec("rnorm --precision 40");
+            System.out.println("Commando: " + command);
+
+            Process p = Runtime.getRuntime().exec(command);
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 //            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 
             // read the output from the command
 //            System.out.println("Here is the standard output of the command:\n");
+            int linha = 1;
             while ((s = stdInput.readLine()) != null) {
-                return s;
+                if (linha == 58){
+                    return s;
+                }
+
             }
 
             // read any errors from the attempted command
@@ -35,7 +47,6 @@ public class Noises {
 //            while ((s = stdError.readLine()) != null) {
 //                System.out.println(s);
 //            }
-
 
         } catch (IOException e) {
             System.out.println("exception happened - here's what I know: ");
