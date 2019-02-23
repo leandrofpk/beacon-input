@@ -1,5 +1,8 @@
 package br.gov.inmetro.beacon.input.noise;
 
+import br.gov.inmetro.beacon.input.BeaconInputApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -19,15 +22,17 @@ class NoiseSourceComScirePQ32MS implements INoiseSource {
     @Value("${beacon.entropy.command}")
     private String command;
 
+    private static final Logger logger = LoggerFactory.getLogger(BeaconInputApplication.class);
+
     @Override
     public String getNoise512Bits() throws IOException, InterruptedException {
         String s = "";
 
-        System.out.println("----------------------------------------------------------------------");
+        logger.warn("---------------------------------------------------------------------");
 
         try {
 
-            System.out.println("Commando: " + command);
+            logger.warn("Commando: " + command);
             Process p = Runtime.getRuntime().exec(command);
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -39,8 +44,7 @@ class NoiseSourceComScirePQ32MS implements INoiseSource {
             while ((s = stdInput.readLine()) != null) {
 
                 System.out.println("---------------------------------");
-                System.out.println(s);
-                System.out.println("Numero:" + s.replaceAll(" ", ""));
+                logger.warn("Numero:" + s.replaceAll(" ", ""));
 
                 if (linha == 58){
                     return s.replaceAll(" ", "");
