@@ -26,13 +26,10 @@ class NoiseSourceComScirePQ32MS implements INoiseSource {
 
     @Override
     public String getNoise512Bits() throws IOException, InterruptedException {
-        String s = "";
-
-        logger.warn("---------------------------------------------------------------------");
+        String s = "1111111111111";
 
         try {
 
-            logger.warn("Commando: " + command);
             Process p = Runtime.getRuntime().exec(command);
 
             BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
@@ -43,12 +40,12 @@ class NoiseSourceComScirePQ32MS implements INoiseSource {
             int linha = 1;
             while ((s = stdInput.readLine()) != null) {
 
-                System.out.println("---------------------------------");
-                logger.warn("Numero:" + s.replaceAll(" ", ""));
+                logger.warn("S:" + s);
 
-                if (linha == 58){
+                if (linha == 57){
                     return s.replaceAll(" ", "");
                 }
+                linha++;
             }
 
             // read any errors from the attempted command
@@ -61,6 +58,8 @@ class NoiseSourceComScirePQ32MS implements INoiseSource {
             System.out.println("exception happened - here's what I know: ");
             e.printStackTrace();
             System.exit(-1);
+        } catch (Exception e){
+            logger.error(e.getMessage());
         }
 
         return s;

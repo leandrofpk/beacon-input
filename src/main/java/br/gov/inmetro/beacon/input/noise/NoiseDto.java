@@ -33,7 +33,7 @@ public class NoiseDto implements Serializable {
 
     private String signatureValue = "signatureValue";
 
-    private String outputValue = "outputvalue";
+    private String outputValue;
 
     public NoiseDto() {
     }

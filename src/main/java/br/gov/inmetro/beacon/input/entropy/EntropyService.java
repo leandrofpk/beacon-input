@@ -26,17 +26,16 @@ public class EntropyService implements IEntropyService{
         entropy.setChain("1");
         entropy.setRawData(noiseDto.getRawData());
         entropy.setFrequency("60");
-        entropy.setOutputValue("RawData+:" + noiseDto.getRawData());
+        entropy.setOutputValue(noiseDto.getRawData());
         entropy.setTimeStamp(noiseDto.getTimeStampDateTime());
         entropy.setVersionBeacon("1.0");
         entropy.setOrigin(OriginEnum.COMSCIRE_PQ32MS);
-
-//        entropy.setUnixTimeStamp(new Long(String.valueOf(noiseDto.getTimeStamp().atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli())));
+        entropy.setStatusCode(noiseDto.getStatusCode());
+        entropy.setSeedValue(noiseDto.getSeedValue());
+        entropy.setSignatureValue(noiseDto.getSignatureValue());
+        entropy.setPreviousOutputValue(noiseDto.getPreviousOutputValue());
 
         entropy.setUnixTimeStamp(entropy.getTimeStamp().atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli());
-
-//        this.timeStamp = String.valueOf(record.getTimeStamp().atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli());
-
 
         entropies.save(entropy);
     }
