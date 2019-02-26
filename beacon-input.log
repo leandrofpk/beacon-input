@@ -923,3 +923,42 @@ Caused by: java.net.ConnectException: Connection refused: connect
 	at org.springframework.web.client.RestTemplate.doExecute(RestTemplate.java:734) ~[spring-web-5.1.4.RELEASE.jar:5.1.4.RELEASE]
 	... 18 common frames omitted
 
+2019-02-26 15:58:20.765  INFO 6056 --- [restartedMain] b.g.i.b.input.BeaconInputApplication     : Starting BeaconInputApplication on LAPTOP-FCCUMJCT with PID 6056 (C:\dev\projetos\beacon-input\target\classes started by leandro in C:\dev\projetos\beacon-input)
+2019-02-26 15:58:20.769  INFO 6056 --- [restartedMain] b.g.i.b.input.BeaconInputApplication     : No active profile set, falling back to default profiles: default
+2019-02-26 15:58:20.853  INFO 6056 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2019-02-26 15:58:20.854  INFO 6056 --- [restartedMain] .e.DevToolsPropertyDefaultsPostProcessor : For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2019-02-26 15:58:22.161  INFO 6056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-02-26 15:58:22.243  INFO 6056 --- [restartedMain] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 71ms. Found 1 repository interfaces.
+2019-02-26 15:58:22.653  INFO 6056 --- [restartedMain] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$73e19ce1] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-02-26 15:58:23.083  INFO 6056 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8091 (http)
+2019-02-26 15:58:23.130  INFO 6056 --- [restartedMain] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-02-26 15:58:23.131  INFO 6056 --- [restartedMain] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.14]
+2019-02-26 15:58:23.138  INFO 6056 --- [restartedMain] o.a.catalina.core.AprLifecycleListener   : The APR based Apache Tomcat Native library which allows optimal performance in production environments was not found on the java.library.path: [C:\Program Files\Java\jdk1.8.0_131\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\WINDOWS\System32\OpenSSH\;C:\dev\ferramentas\apache-maven-3.5.4\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Git\cmd;C:\Users\leandro\AppData\Local\Microsoft\WindowsApps;;.]
+2019-02-26 15:58:23.259  INFO 6056 --- [restartedMain] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2019-02-26 15:58:23.259  INFO 6056 --- [restartedMain] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 2404 ms
+2019-02-26 15:58:23.831  INFO 6056 --- [restartedMain] o.f.c.internal.license.VersionPrinter    : Flyway Community Edition 5.2.4 by Boxfuse
+2019-02-26 15:58:23.833  INFO 6056 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-02-26 15:58:23.933  INFO 6056 --- [restartedMain] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-02-26 15:58:23.936  INFO 6056 --- [restartedMain] o.f.c.internal.database.DatabaseFactory  : Database: jdbc:mysql://localhost/beacon-input (MySQL 8.0)
+2019-02-26 15:58:24.007  INFO 6056 --- [restartedMain] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.022s)
+2019-02-26 15:58:24.021  INFO 6056 --- [restartedMain] o.f.core.internal.command.DbMigrate      : Current version of schema `beacon-input`: 1.0
+2019-02-26 15:58:24.023  INFO 6056 --- [restartedMain] o.f.core.internal.command.DbMigrate      : Migrating schema `beacon-input` to version 1.1 - add sent to entropy
+2019-02-26 15:58:24.357  INFO 6056 --- [restartedMain] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema `beacon-input` (execution time 00:00.344s)
+2019-02-26 15:58:24.459  INFO 6056 --- [restartedMain] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-02-26 15:58:24.519  INFO 6056 --- [restartedMain] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.7.Final}
+2019-02-26 15:58:24.520  INFO 6056 --- [restartedMain] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-02-26 15:58:24.662  INFO 6056 --- [restartedMain] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-02-26 15:58:24.790  INFO 6056 --- [restartedMain] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2019-02-26 15:58:25.395  INFO 6056 --- [restartedMain] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-02-26 15:58:25.434  INFO 6056 --- [restartedMain] o.s.b.d.a.OptionalLiveReloadServer       : LiveReload server is running on port 35729
+2019-02-26 15:58:25.906  INFO 6056 --- [restartedMain] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-02-26 15:58:26.180  INFO 6056 --- [restartedMain] o.s.s.c.ThreadPoolTaskScheduler          : Initializing ExecutorService 'taskScheduler'
+2019-02-26 15:58:26.214  INFO 6056 --- [restartedMain] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoint(s) beneath base path '/actuator'
+2019-02-26 15:58:26.290  INFO 6056 --- [restartedMain] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8091 (http) with context path ''
+2019-02-26 15:58:26.293  INFO 6056 --- [restartedMain] b.g.i.b.input.BeaconInputApplication     : Started BeaconInputApplication in 6.119 seconds (JVM running for 7.839)
+2019-02-26 15:58:26.459  INFO 6056 --- [RMI TCP Connection(2)-127.0.0.1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2019-02-26 15:58:26.460  INFO 6056 --- [RMI TCP Connection(2)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2019-02-26 15:58:26.478  INFO 6056 --- [RMI TCP Connection(2)-127.0.0.1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 18 ms
+2019-02-26 15:59:01.170 ERROR 6056 --- [scheduling-1] b.g.i.b.input.BeaconInputApplication     : Logger no scheduling 2:I/O error on POST request for "http://localhost:8080/rest/record/v2": Connection refused: connect; nested exception is java.net.ConnectException: Connection refused: connect
