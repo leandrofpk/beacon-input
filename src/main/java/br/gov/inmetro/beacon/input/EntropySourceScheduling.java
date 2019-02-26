@@ -2,6 +2,7 @@ package br.gov.inmetro.beacon.input;
 
 import br.gov.inmetro.beacon.input.application.RestApiRepo;
 import br.gov.inmetro.beacon.input.entropy.IEntropyService;
+import br.gov.inmetro.beacon.input.noise.DeviceException;
 import br.gov.inmetro.beacon.input.noise.INoiseService;
 import br.gov.inmetro.beacon.input.noise.NoiseDto;
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
@@ -35,12 +37,25 @@ public class EntropySourceScheduling {
 
     @Scheduled(cron = "*/60 * * * * *")
     public void getNoise() {
-        final String bytes = noiseService.get512Bits();
 
-        NoiseDto noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
-                bytes, "chain 1", "60", "Version 1.0", "0");
+        final String bytes;
+        try {
+            bytes = noiseService.get512Bits();
 
-        entropyService.save(noiseDto);
-        restApiRepo.send(noiseDto);
+            NoiseDto noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+                    bytes, "chain 1", "60", "Version 1.0", "0");
+
+            entropyService.save(noiseDto);
+            restApiRepo.send(noiseDto);
+
+        } catch (DeviceException e) {
+            e.printStackTrace();
+            logger.error("Logger no scheduling:" + e.getMessage());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            logger.error("Logger no scheduling 2:" + e.getMessage());
+        }
+
     }
 }

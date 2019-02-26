@@ -6,6 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 @Component
 class NoiseService implements INoiseService {
 
@@ -18,18 +20,16 @@ class NoiseService implements INoiseService {
         this.noiseSource = noiseSource;
     }
 
-    public String get512Bits(){
+    public String get512Bits() throws IOException, InterruptedException, DeviceException {
         String noise = null;
-        try {
+        //try {
             noise = noiseSource.getNoise512Bits();
-
-
-
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            e.printStackTrace();
-            throw new NoiseException(e.getMessage());
-        }
+//        } catch (Exception e) {
+//            logger.error(e.getMessage());
+//            logger.error("EMITIR AVISO");
+////            e.printStackTrace();
+////            throw new NoiseException(e.getMessage());
+//        }
         return noise;
     }
 
