@@ -51,9 +51,9 @@ public class NoiseDto implements Serializable {
 
     }
 
-    public NoiseDto(LocalDateTime timeStamp, String rawData, String frequency) {
-        this.timeStampDateTime = timeStamp;
-        this.rawData = rawData;
-        this.frequency = frequency;
-    }
+//    public NoiseDto(LocalDateTime timeStamp, String rawData, String frequency) {
+//        this.timeStampDateTime = timeStamp;
+//        this.rawData = rawData;
+//        this.frequency = frequency;
+//    }
 }

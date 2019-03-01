@@ -55,5 +55,11 @@ public class Entropy {
     @NotNull
     private OriginEnum origin;
 
+    private boolean sent = false;
+
+    public Entropy sentToRemote(){
+        this.sent = true;
+        return this;
+    }
 
 }

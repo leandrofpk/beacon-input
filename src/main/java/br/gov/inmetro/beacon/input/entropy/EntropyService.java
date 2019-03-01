@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.ZoneId;
+import java.util.List;
 
 @Component
 public class EntropyService implements IEntropyService{
@@ -19,7 +20,7 @@ public class EntropyService implements IEntropyService{
 
     @Override
     @Transactional
-    public void save(NoiseDto noiseDto) {
+    public Entropy save(NoiseDto noiseDto) {
 
         Entropy entropy = new Entropy();
 
@@ -37,6 +38,17 @@ public class EntropyService implements IEntropyService{
 
         entropy.setUnixTimeStamp(entropy.getTimeStamp().atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli());
 
-        entropies.save(entropy);
+        return entropies.save(entropy);
     }
+
+    @Transactional
+    public void sent(Long id){
+        entropies.save(entropies.findById(id).get().sentToRemote());
+    }
+
+    @Transactional(readOnly = true)
+    public List<Entropy> getNotSent(){
+        return entropies.findBySentOrderById(false);
+    }
+
 }

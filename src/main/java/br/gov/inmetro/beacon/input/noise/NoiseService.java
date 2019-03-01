@@ -21,16 +21,7 @@ class NoiseService implements INoiseService {
     }
 
     public String get512Bits() throws IOException, InterruptedException, DeviceException {
-        String noise = null;
-        //try {
-            noise = noiseSource.getNoise512Bits();
-//        } catch (Exception e) {
-//            logger.error(e.getMessage());
-//            logger.error("EMITIR AVISO");
-////            e.printStackTrace();
-////            throw new NoiseException(e.getMessage());
-//        }
-        return noise;
+        return noiseSource.getNoise512Bits();
     }
 
 }

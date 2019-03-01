@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -27,8 +26,9 @@ public class RestApiRepo {
 
 
     public void send(NoiseDto noiseDto) {
-        ResponseEntity<NoiseDto> response = restTemplate.postForEntity(uri, noiseDto, NoiseDto.class);
-        System.out.println(response.getStatusCode());
+        restTemplate.postForEntity(uri, noiseDto, NoiseDto.class);
+//        ResponseEntity<NoiseDto> response = restTemplate.postForEntity(uri, noiseDto, NoiseDto.class);
+//        System.out.println(response.getStatusCode());
     }
 
 
