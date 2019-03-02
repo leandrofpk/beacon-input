@@ -27,8 +27,6 @@ public class RestApiRepo {
 
     public void send(NoiseDto noiseDto) {
         restTemplate.postForEntity(uri, noiseDto, NoiseDto.class);
-//        ResponseEntity<NoiseDto> response = restTemplate.postForEntity(uri, noiseDto, NoiseDto.class);
-//        System.out.println(response.getStatusCode());
     }
 
 
