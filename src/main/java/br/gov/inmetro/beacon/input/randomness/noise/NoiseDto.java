@@ -1,4 +1,4 @@
-package br.gov.inmetro.beacon.input.noise;
+package br.gov.inmetro.beacon.input.randomness.noise;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;

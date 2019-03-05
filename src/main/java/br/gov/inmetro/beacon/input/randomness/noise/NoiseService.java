@@ -1,6 +1,7 @@
-package br.gov.inmetro.beacon.input.noise;
+package br.gov.inmetro.beacon.input.randomness.noise;
 
 import br.gov.inmetro.beacon.input.BeaconInputApplication;
+import br.gov.inmetro.beacon.input.exceptions.NoiseSourceReadError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ class NoiseService implements INoiseService {
         this.noiseSource = noiseSource;
     }
 
-    public String get512Bits() throws IOException, InterruptedException, DeviceException {
+    public String get512Bits() throws IOException, InterruptedException, NoiseSourceReadError {
         return noiseSource.getNoise512Bits();
     }
 

@@ -1,10 +1,11 @@
 package br.gov.inmetro.beacon.input.application;
 
-import br.gov.inmetro.beacon.input.noise.NoiseDto;
+import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -14,19 +15,23 @@ public class RestApiRepo {
     @Value("${beacon.api.url}")
     private String uri;
 
+    private RestTemplate restTemplate;
+
+    @Autowired
+    public RestApiRepo(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
+
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
-        return builder.basicAuthentication("beacon", "483588e8-c51e-47d3-84eb-0c30e822988e")
+        return builder.basicAuthentication("beacon-2", "31a9e0bb-69de-49d0-98ea-bc375748bce3")
                 .errorHandler(new RestTemplateResponseErrorHandler())
                 .build();
     }
 
-    @Autowired
-    private RestTemplate restTemplate;
 
-
-    public void send(NoiseDto noiseDto) {
-        restTemplate.postForEntity(uri, noiseDto, NoiseDto.class);
+    public ResponseEntity<String> send(NoiseDto noiseDto) {
+        return restTemplate.postForEntity(uri, noiseDto, String.class);
     }
 
 

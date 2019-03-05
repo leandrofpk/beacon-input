@@ -1,12 +1,15 @@
-package br.gov.inmetro.beacon.input.noise;
+package br.gov.inmetro.beacon.input.scheduling;
 
 import br.gov.inmetro.beacon.input.BeaconInputApplication;
 import br.gov.inmetro.beacon.input.application.RestApiRepo;
-import br.gov.inmetro.beacon.input.entropy.Entropy;
-import br.gov.inmetro.beacon.input.entropy.IEntropyService;
+import br.gov.inmetro.beacon.input.randomness.entropy.Entropy;
+import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyService;
+import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -32,7 +35,6 @@ public class SynchronizeRemoteNumbersScheduling {
     @Scheduled(cron = "*/60 * * * * *")
     public void getNoise() {
         List<Entropy> notSent = iEntropyService.getNotSent();
-        System.out.println(notSent.size());
 
         if (notSent.isEmpty()) return;
 
@@ -41,13 +43,14 @@ public class SynchronizeRemoteNumbersScheduling {
                 NoiseDto noiseDto = new NoiseDto(e.getTimeStamp(),
                         e.getRawData(), "chain 2", "60", "Version 1.0", "0");
 
-                restApiRepo.send(noiseDto);
-                iEntropyService.sent(e.getId());
+                ResponseEntity<String> response = restApiRepo.send(noiseDto);
+                if (HttpStatus.CREATED.equals(response.getStatusCode())){
+                    iEntropyService.sent(e.getId());
+                }
+
             }
         } catch (Exception e){
-//            logger.error("Number not sent: " + saved.getTimeStamp());
-            System.out.println("TESTE");
-
+            logger.error("Sync error");
         }
 
     }

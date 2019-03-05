@@ -1,11 +1,9 @@
-package br.gov.inmetro.beacon.input.noise;
+package br.gov.inmetro.beacon.input.randomness.noise;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 /*
     https://crunchify.com/how-to-run-windowsmac-commands-in-java-and-return-the-text-result/
@@ -16,7 +14,7 @@ import java.io.InputStreamReader;
 class NoiseSourceRnorm implements INoiseSource {
 
     @Override
-    public String getNoise512Bits() throws IOException, InterruptedException {
+    public String getNoise512Bits() {
 
         String s = "";
 

@@ -1,6 +1,6 @@
-package br.gov.inmetro.beacon.input.entropy;
+package br.gov.inmetro.beacon.input.randomness.entropy;
 
-import br.gov.inmetro.beacon.input.noise.NoiseDto;
+import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;

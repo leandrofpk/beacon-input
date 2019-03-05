@@ -1,4 +1,4 @@
-package br.gov.inmetro.beacon.input.entropy;
+package br.gov.inmetro.beacon.input.randomness.entropy;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -57,7 +57,7 @@ public class Entropy {
 
     private boolean sent = false;
 
-    public Entropy sentToRemote(){
+    Entropy sentToRemote(){
         this.sent = true;
         return this;
     }

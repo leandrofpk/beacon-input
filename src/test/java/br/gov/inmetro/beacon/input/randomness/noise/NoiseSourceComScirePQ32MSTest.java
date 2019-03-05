@@ -1,8 +1,6 @@
-package br.gov.inmetro.beacon.input.noise;
+package br.gov.inmetro.beacon.input.randomness.noise;
 
 import org.junit.Test;
-
-import static org.junit.Assert.*;
 
 public class NoiseSourceComScirePQ32MSTest {
 

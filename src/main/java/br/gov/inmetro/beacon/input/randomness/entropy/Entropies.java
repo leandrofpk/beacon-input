@@ -1,4 +1,4 @@
-package br.gov.inmetro.beacon.input.entropy;
+package br.gov.inmetro.beacon.input.randomness.entropy;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
