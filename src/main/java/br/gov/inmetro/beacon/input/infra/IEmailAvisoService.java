@@ -1,6 +1,6 @@
 package br.gov.inmetro.beacon.input.infra;
 
-public interface EmailAvisoService {
+public interface IEmailAvisoService {
 
     void sendSimpleMessage(String subject,
                            StringBuilder body);

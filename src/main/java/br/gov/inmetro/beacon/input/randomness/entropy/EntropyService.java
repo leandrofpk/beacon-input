@@ -24,7 +24,7 @@ public class EntropyService implements IEntropyService{
 
         Entropy entropy = new Entropy();
 
-        entropy.setChain("1");
+        entropy.setChain(noiseDto.getChain());
         entropy.setRawData(noiseDto.getRawData());
         entropy.setFrequency("60");
         entropy.setOutputValue(noiseDto.getRawData());

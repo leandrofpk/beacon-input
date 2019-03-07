@@ -15,12 +15,8 @@ public class RestApiRepo {
     @Value("${beacon.api.url}")
     private String uri;
 
-    private RestTemplate restTemplate;
-
     @Autowired
-    public RestApiRepo(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
-    }
+    private RestTemplate restTemplate;
 
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder builder) {
