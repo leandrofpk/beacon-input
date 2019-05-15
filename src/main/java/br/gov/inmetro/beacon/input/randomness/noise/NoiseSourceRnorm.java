@@ -14,15 +14,17 @@ import java.io.IOException;
 class NoiseSourceRnorm implements INoiseSource {
 
     @Override
-    public String getNoise512Bits() {
+    public String getNoise512Bits() throws IOException {
 
         String s = "";
 
 //        try {
 
-//            Process p = Runtime.getRuntime().exec("rnorm --precision 40");
+            Process p = Runtime.getRuntime().exec("rnorm --precision 40");
 
-            return "B54CB7ECD383D7542F5C896D9B26D8998A4E1CA762ED3139B8276D803F66B6E1E1BC76D67D4A8DA0B0E4E4AF51FD594FD62DF67A7021F2E6ECDC3C1FBFC5711B";
+            return p.toString();
+
+//            return "B54CB7ECD383D7542F5C896D9B26D8998A4E1CA762ED3139B8276D803F66B6E1E1BC76D67D4A8DA0B0E4E4AF51FD594FD62DF67A7021F2E6ECDC3C1FBFC5711B";
 
 //            BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 //            BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));

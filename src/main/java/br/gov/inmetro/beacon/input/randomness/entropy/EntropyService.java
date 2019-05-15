@@ -2,6 +2,7 @@ package br.gov.inmetro.beacon.input.randomness.entropy;
 
 import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,9 +14,12 @@ public class EntropyService implements IEntropyService{
 
     private Entropies entropies;
 
+    private Environment env;
+
     @Autowired
-    public EntropyService(Entropies entropies) {
+    public EntropyService(Entropies entropies, Environment env) {
         this.entropies = entropies;
+        this.env = env;
     }
 
     @Override
@@ -29,12 +33,12 @@ public class EntropyService implements IEntropyService{
         entropy.setFrequency("60");
         entropy.setOutputValue(noiseDto.getRawData());
         entropy.setTimeStamp(noiseDto.getTimeStampDateTime());
-        entropy.setVersionBeacon("1.0");
+        entropy.setVersionBeacon(env.getProperty("beacon.version"));
         entropy.setOrigin(OriginEnum.COMSCIRE_PQ32MS);
         entropy.setStatusCode(noiseDto.getStatusCode());
-        entropy.setSeedValue(noiseDto.getSeedValue());
-        entropy.setSignatureValue(noiseDto.getSignatureValue());
-        entropy.setPreviousOutputValue(noiseDto.getPreviousOutputValue());
+        entropy.setSeedValue("noiseDto.getSeedValue()-RETIRAR");
+        entropy.setSignatureValue("TALVEZ ASSINAR DEPOIS");
+        entropy.setPreviousOutputValue("noiseDto.getPreviousOutputValue()-RETIRAR");
 
         entropy.setUnixTimeStamp(entropy.getTimeStamp().atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli());
 
