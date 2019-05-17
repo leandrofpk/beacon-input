@@ -31,15 +31,9 @@ public class EntropyService implements IEntropyService{
         entropy.setChain(noiseDto.getChain());
         entropy.setRawData(noiseDto.getRawData());
         entropy.setFrequency("60");
-        entropy.setOutputValue(noiseDto.getRawData());
         entropy.setTimeStamp(noiseDto.getTimeStampDateTime());
         entropy.setVersionBeacon(env.getProperty("beacon.version"));
         entropy.setOrigin(OriginEnum.COMSCIRE_PQ32MS);
-        entropy.setStatusCode(noiseDto.getStatusCode());
-        entropy.setSeedValue("noiseDto.getSeedValue()-RETIRAR");
-        entropy.setSignatureValue("TALVEZ ASSINAR DEPOIS");
-        entropy.setPreviousOutputValue("noiseDto.getPreviousOutputValue()-RETIRAR");
-
         entropy.setUnixTimeStamp(entropy.getTimeStamp().atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli());
 
         return entropies.save(entropy);

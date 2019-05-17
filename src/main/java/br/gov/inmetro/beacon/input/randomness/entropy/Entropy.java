@@ -23,7 +23,6 @@ public class Entropy {
     @NotNull
     private String chain;
 
-    @NotNull
     @Length(max = 20)
     private String versionBeacon;
 

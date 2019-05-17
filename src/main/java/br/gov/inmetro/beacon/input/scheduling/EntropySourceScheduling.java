@@ -57,7 +57,7 @@ public class EntropySourceScheduling {
             bytes = noiseService.get512Bits();
 
             noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
-                    bytes, env.getProperty("beacon.entropy.chain"), "60", "Version 1.0", "0");
+                    bytes, env.getProperty("beacon.entropy.chain"), "60");
 
             saved = entropyService.save(noiseDto);
 

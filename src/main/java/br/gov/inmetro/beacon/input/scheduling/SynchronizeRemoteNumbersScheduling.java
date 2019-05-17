@@ -41,7 +41,7 @@ public class SynchronizeRemoteNumbersScheduling {
         try {
             for (Entropy e : notSent) {
                 NoiseDto noiseDto = new NoiseDto(e.getTimeStamp(),
-                        e.getRawData(), "chain 1", "60", "Version 1.0", "0");
+                        e.getRawData(), "chain 1", "60");
 
                 ResponseEntity<String> response = restApiRepo.send(noiseDto);
                 if (HttpStatus.CREATED.equals(response.getStatusCode())){
