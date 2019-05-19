@@ -3,29 +3,19 @@ package br.gov.inmetro.beacon.input.randomness.noise;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
-import java.util.Random;
 
 @Component
 @Profile("default")
 class NoiseSourceJavaRandom implements INoiseSource {
 
     @Override
-    public String getNoise512Bits() {
-         return bytesToHex(gerarNumero512Bits().getBytes());
+    public String getNoise512Bits() throws Exception {
+        byte[] bytes = new byte[64];
+        SecureRandom.getInstance("NativePRNG").nextBytes(bytes);
+        return bytesToHex(bytes);
     }
-
-    private String gerarNumero512Bits(){
-        Random gerador = new Random();
-        String string512 = "";
-        for (int i = 0; i < 512; i++) {
-            string512 = string512 + gerador.nextInt(90);
-        }
-        return string512;
-    }
-
 
     private String bytesToHex(byte[] hash) {
         StringBuffer hexString = new StringBuffer();

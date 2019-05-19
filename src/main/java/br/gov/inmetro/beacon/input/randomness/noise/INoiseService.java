@@ -5,5 +5,5 @@ import br.gov.inmetro.beacon.input.exceptions.NoiseSourceReadError;
 import java.io.IOException;
 
 public interface INoiseService {
-    String get512Bits() throws IOException, InterruptedException, NoiseSourceReadError;
+    String get512Bits() throws IOException, InterruptedException, NoiseSourceReadError, Exception;
 }
