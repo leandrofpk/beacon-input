@@ -8,12 +8,14 @@ import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -24,12 +26,15 @@ public class SynchronizeRemoteNumbersScheduling {
 
     private final IEntropyService iEntropyService;
 
+    private final Environment env;
+
     private static final Logger logger = LoggerFactory.getLogger(BeaconInputApplication.class);
 
     @Autowired
-    public SynchronizeRemoteNumbersScheduling(RestApiRepo restApiRepo, IEntropyService iEntropyService) {
+    public SynchronizeRemoteNumbersScheduling(RestApiRepo restApiRepo, IEntropyService iEntropyService, Environment env) {
         this.restApiRepo = restApiRepo;
         this.iEntropyService = iEntropyService;
+        this.env = env;
     }
 
     @Scheduled(cron = "*/60 * * * * *")
@@ -39,9 +44,19 @@ public class SynchronizeRemoteNumbersScheduling {
         if (notSent.isEmpty()) return;
 
         try {
+            List<NoiseDto> noises = new ArrayList<>();
+
             for (Entropy e : notSent) {
                 NoiseDto noiseDto = new NoiseDto(e.getTimeStamp(),
-                        e.getRawData(), "chain 1", "60");
+                        e.getRawData(), env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
+                noises.add(noiseDto);
+
+
+            }
+
+            for (Entropy e : notSent) {
+                NoiseDto noiseDto = new NoiseDto(e.getTimeStamp(),
+                        e.getRawData(), env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
 
                 ResponseEntity<String> response = restApiRepo.send(noiseDto);
                 if (HttpStatus.CREATED.equals(response.getStatusCode())){

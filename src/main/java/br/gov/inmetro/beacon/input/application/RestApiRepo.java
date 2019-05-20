@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
+
 @Component
 public class RestApiRepo {
 
@@ -28,6 +30,11 @@ public class RestApiRepo {
 
     public ResponseEntity<String> send(NoiseDto noiseDto) {
         return restTemplate.postForEntity(uri, noiseDto, String.class);
+    }
+
+    public ResponseEntity<String> send(List<NoiseDto> noises) {
+//        return restTemplate.postForEntity(uri, noises, List<>.class);
+        return restTemplate.postForObject(uri, noises, ResponseEntity.class);
     }
 
 

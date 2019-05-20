@@ -16,18 +16,21 @@ public class NoiseDto implements Serializable {
 
     private String frequency;
 
+    private String noiseSource;
+
     @JsonIgnore
     private LocalDateTime timeStampDateTime;
 
     private Long timeStamp;
 
     public NoiseDto(LocalDateTime timeStamp, String rawData, String chain,
-                    String frequency) {
+                    String frequency, String noiseSource) {
         this.timeStampDateTime = timeStamp;
         this.rawData = rawData;
         this.chain = chain;
         this.frequency = frequency;
         this.timeStamp = this.timeStampDateTime.atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli();
+        this.noiseSource = noiseSource;
     }
 
 }
