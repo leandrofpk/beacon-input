@@ -44,6 +44,12 @@ public class EntropyService implements IEntropyService{
         entropies.save(entropies.findById(id).get().sentToRemote());
     }
 
+    @Transactional
+    public void sent(List<Entropy> notSent){
+        notSent.forEach(entropy -> entropy.setSent(true));
+        entropies.saveAll(notSent);
+    }
+
     @Transactional(readOnly = true)
     public List<Entropy> getNotSent(){
         return entropies.findBySentOrderById(false);

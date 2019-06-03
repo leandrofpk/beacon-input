@@ -46,24 +46,31 @@ public class SynchronizeRemoteNumbersScheduling {
         try {
             List<NoiseDto> noises = new ArrayList<>();
 
+
+            // TODO O DTO deve chegar aqui completo
             for (Entropy e : notSent) {
                 NoiseDto noiseDto = new NoiseDto(e.getTimeStamp(),
                         e.getRawData(), env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
                 noises.add(noiseDto);
 
-
             }
 
-            for (Entropy e : notSent) {
-                NoiseDto noiseDto = new NoiseDto(e.getTimeStamp(),
-                        e.getRawData(), env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
-
-                ResponseEntity<String> response = restApiRepo.send(noiseDto);
-                if (HttpStatus.CREATED.equals(response.getStatusCode())){
-                    iEntropyService.sent(e.getId());
-                }
-
+            ResponseEntity<String> response = restApiRepo.send(noises);
+            if (HttpStatus.CREATED.equals(response.getStatusCode())){
+                iEntropyService.sent(notSent);
             }
+
+
+//            for (Entropy e : notSent) {
+//                NoiseDto noiseDto = new NoiseDto(e.getTimeStamp(),
+//                        e.getRawData(), env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
+//
+//                ResponseEntity<String> response = restApiRepo.send(noiseDto);
+//                if (HttpStatus.CREATED.equals(response.getStatusCode())){
+//                    iEntropyService.sent(e.getId());
+//                }
+//
+//            }
         } catch (Exception e){
             logger.error("Sync error");
         }

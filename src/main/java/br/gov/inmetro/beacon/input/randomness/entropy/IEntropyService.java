@@ -10,6 +10,8 @@ public interface IEntropyService {
 
     void sent(Long id);
 
+    void sent(List<Entropy> notSent);
+
     List<Entropy> getNotSent();
 
 }

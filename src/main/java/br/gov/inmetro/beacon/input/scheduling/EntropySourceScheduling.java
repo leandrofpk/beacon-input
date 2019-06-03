@@ -56,6 +56,7 @@ public class EntropySourceScheduling {
         try {
             bytes = noiseService.get512Bits();
 
+            // TODO O DTO deve chegar aqui completo
             noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                     bytes, env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
 

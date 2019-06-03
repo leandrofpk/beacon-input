@@ -33,8 +33,8 @@ public class RestApiRepo {
     }
 
     public ResponseEntity<String> send(List<NoiseDto> noises) {
-//        return restTemplate.postForEntity(uri, noises, List<>.class);
-        return restTemplate.postForObject(uri, noises, ResponseEntity.class);
+//        return restTemplate.postForEntity(uri, noises, List<NoiseDto>.class);
+        return restTemplate.postForObject(uri + "/sync", noises, ResponseEntity.class);
     }
 
 
