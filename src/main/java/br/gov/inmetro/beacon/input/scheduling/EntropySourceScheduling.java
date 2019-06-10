@@ -2,10 +2,10 @@ package br.gov.inmetro.beacon.input.scheduling;
 
 import br.gov.inmetro.beacon.input.BeaconInputApplication;
 import br.gov.inmetro.beacon.input.application.RestApiRepo;
+import br.gov.inmetro.beacon.input.exceptions.NoiseSourceReadError;
 import br.gov.inmetro.beacon.input.infra.IEmailAvisoService;
 import br.gov.inmetro.beacon.input.randomness.entropy.Entropy;
 import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyService;
-import br.gov.inmetro.beacon.input.exceptions.NoiseSourceReadError;
 import br.gov.inmetro.beacon.input.randomness.noise.INoiseService;
 import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
 import org.slf4j.Logger;
@@ -14,15 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
 @Component
-@EnableScheduling
+//@EnableScheduling
 public class EntropySourceScheduling {
 
     private final INoiseService noiseService;
@@ -33,8 +29,6 @@ public class EntropySourceScheduling {
 
     private final RestApiRepo restApiRepo;
 
-    private final Environment env;
-
     private static final Logger logger = LoggerFactory.getLogger(BeaconInputApplication.class);
 
     @Autowired
@@ -43,23 +37,16 @@ public class EntropySourceScheduling {
         this.entropyService = entropyService;
         this.mailService = mailService;
         this.restApiRepo = restApiRepo;
-        this.env = env;
     }
 
-    @Scheduled(cron = "*/60 * * * * *")
+//    @Scheduled(cron = "*/60 * * * * *")
     public void getNoise() {
 
-        final String bytes;
         NoiseDto noiseDto = null;
         Entropy saved = null;
 
         try {
-            bytes = noiseService.get512Bits();
-
-            // TODO O DTO deve chegar aqui completo
-            noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
-                    bytes, env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
-
+            noiseDto = noiseService.getNoise();
             saved = entropyService.save(noiseDto);
 
         } catch (NoiseSourceReadError e) {

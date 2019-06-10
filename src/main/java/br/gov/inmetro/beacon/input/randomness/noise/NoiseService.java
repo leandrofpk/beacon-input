@@ -1,26 +1,42 @@
 package br.gov.inmetro.beacon.input.randomness.noise;
 
-import br.gov.inmetro.beacon.input.BeaconInputApplication;
-import br.gov.inmetro.beacon.input.exceptions.NoiseSourceReadError;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Component
 class NoiseService implements INoiseService {
 
     private final INoiseSource noiseSource;
 
-    private static final Logger logger = LoggerFactory.getLogger(BeaconInputApplication.class);
+    private final Environment env;
+
 
     @Autowired
-    NoiseService(INoiseSource noiseSource) {
+    NoiseService(INoiseSource noiseSource, Environment env) {
         this.noiseSource = noiseSource;
+        this.env = env;
     }
 
-    public String get512Bits() throws Exception, InterruptedException, NoiseSourceReadError {
-        return noiseSource.getNoise512Bits();
+    public NoiseDto getNoise() throws Exception {
+        final String noise512Bits = noiseSource.getNoise512Bits();
+
+        NoiseDto noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+                noise512Bits, env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
+
+        return noiseDto;
+    }
+
+    public NoiseDto getNoise(String beaconNoiseSource) throws Exception {
+        final String noise512Bits = noiseSource.getNoise512Bits();
+
+        NoiseDto noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+                noise512Bits, env.getProperty("beacon.entropy.chain"), "60", beaconNoiseSource);
+
+        return noiseDto;
     }
 
 }

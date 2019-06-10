@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@EnableScheduling
+//@EnableScheduling
 public class SynchronizeRemoteNumbersScheduling {
 
     private final RestApiRepo restApiRepo;
@@ -37,7 +37,7 @@ public class SynchronizeRemoteNumbersScheduling {
         this.env = env;
     }
 
-    @Scheduled(cron = "*/60 * * * * *")
+//    @Scheduled(cron = "*/60 * * * * *")
     public void getNoise() {
         List<Entropy> notSent = iEntropyService.getNotSent();
 
