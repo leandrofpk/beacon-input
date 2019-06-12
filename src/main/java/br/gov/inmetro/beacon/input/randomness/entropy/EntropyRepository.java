@@ -10,14 +10,14 @@ import java.time.ZoneId;
 import java.util.List;
 
 @Component
-public class EntropyService implements IEntropyService{
+public class EntropyRepository implements IEntropyRepository {
 
     private Entropies entropies;
 
     private Environment env;
 
     @Autowired
-    public EntropyService(Entropies entropies, Environment env) {
+    public EntropyRepository(Entropies entropies, Environment env) {
         this.entropies = entropies;
         this.env = env;
     }
@@ -40,8 +40,8 @@ public class EntropyService implements IEntropyService{
     }
 
     @Transactional
-    public void sent(Long id){
-        entropies.save(entropies.findById(id).get().sentToRemote());
+    public void sent(Long id, boolean value){
+        entropies.save(entropies.findById(id).get().sentRemote(value));
     }
 
     @Transactional

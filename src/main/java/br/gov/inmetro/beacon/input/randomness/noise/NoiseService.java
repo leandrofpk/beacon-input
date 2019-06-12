@@ -39,4 +39,13 @@ class NoiseService implements INoiseService {
         return noiseDto;
     }
 
+    public NoiseDto getNoise(String chain, String beaconNoiseSource) throws Exception {
+        final String noise512Bits = noiseSource.getNoise512Bits();
+
+        NoiseDto noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+                noise512Bits, chain, "60", beaconNoiseSource);
+
+        return noiseDto;
+    }
+
 }

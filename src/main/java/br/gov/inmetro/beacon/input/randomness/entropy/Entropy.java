@@ -54,10 +54,10 @@ public class Entropy {
     @NotNull
     private OriginEnum origin;
 
-    private boolean sent = false;
+    private boolean sent = true;
 
-    Entropy sentToRemote(){
-        this.sent = true;
+    Entropy sentRemote(boolean value){
+        this.sent = value;
         return this;
     }
 

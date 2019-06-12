@@ -5,7 +5,7 @@ import br.gov.inmetro.beacon.input.application.RestApiRepo;
 import br.gov.inmetro.beacon.input.exceptions.NoiseSourceReadError;
 import br.gov.inmetro.beacon.input.infra.IEmailAvisoService;
 import br.gov.inmetro.beacon.input.randomness.entropy.Entropy;
-import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyService;
+import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyRepository;
 import br.gov.inmetro.beacon.input.randomness.noise.INoiseService;
 import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
 import org.slf4j.Logger;
@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -23,7 +22,7 @@ public class EntropySourceScheduling {
 
     private final INoiseService noiseService;
 
-    private final IEntropyService entropyService;
+    private final IEntropyRepository entropyService;
 
     private final IEmailAvisoService mailService;
 
@@ -32,7 +31,7 @@ public class EntropySourceScheduling {
     private static final Logger logger = LoggerFactory.getLogger(BeaconInputApplication.class);
 
     @Autowired
-    public EntropySourceScheduling(INoiseService noiseService, IEntropyService entropyService, IEmailAvisoService mailService, RestApiRepo restApiRepo, Environment env) {
+    public EntropySourceScheduling(INoiseService noiseService, IEntropyRepository entropyService, IEmailAvisoService mailService, RestApiRepo restApiRepo, Environment env) {
         this.noiseService = noiseService;
         this.entropyService = entropyService;
         this.mailService = mailService;
@@ -61,7 +60,7 @@ public class EntropySourceScheduling {
         try {
             ResponseEntity<String> response = restApiRepo.send(noiseDto);
             if (HttpStatus.CREATED.equals(response.getStatusCode())){
-                entropyService.sent(saved.getId());
+//                entropyService.sent(saved.getId());
             } else {
                 logger.error(response.toString());
             }
