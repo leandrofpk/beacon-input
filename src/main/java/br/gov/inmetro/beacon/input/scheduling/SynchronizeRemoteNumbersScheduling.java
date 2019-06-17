@@ -4,7 +4,7 @@ import br.gov.inmetro.beacon.input.BeaconInputApplication;
 import br.gov.inmetro.beacon.input.application.RestApiRepo;
 import br.gov.inmetro.beacon.input.randomness.entropy.Entropy;
 import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyRepository;
-import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
+import br.gov.inmetro.beacon.input.randomness.entropy.EntropyDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,12 +42,12 @@ public class SynchronizeRemoteNumbersScheduling {
         if (notSent.isEmpty()) return;
 
         try {
-            List<NoiseDto> noises = new ArrayList<>();
+            List<EntropyDto> noises = new ArrayList<>();
 
 
             // TODO O DTO deve chegar aqui completo
             for (Entropy e : notSent) {
-                NoiseDto noiseDto = new NoiseDto(e.getTimeStamp(),
+                EntropyDto noiseDto = new EntropyDto(e.getTimeStamp(),
                         e.getRawData(), env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
                 noises.add(noiseDto);
 
@@ -60,10 +60,10 @@ public class SynchronizeRemoteNumbersScheduling {
 
 
 //            for (Entropy e : notSent) {
-//                NoiseDto noiseDto = new NoiseDto(e.getTimeStamp(),
+//                EntropyDto noiseDto = new EntropyDto(e.getTimeStamp(),
 //                        e.getRawData(), env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
 //
-//                ResponseEntity<String> response = restApiRepo.send(noiseDto);
+//                ResponseEntity<String> response = restApiRepo.sendRegular(noiseDto);
 //                if (HttpStatus.CREATED.equals(response.getStatusCode())){
 //                    iEntropyService.sent(e.getId());
 //                }

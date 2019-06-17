@@ -6,8 +6,8 @@ import br.gov.inmetro.beacon.input.exceptions.NoiseSourceReadError;
 import br.gov.inmetro.beacon.input.infra.IEmailAvisoService;
 import br.gov.inmetro.beacon.input.randomness.entropy.Entropy;
 import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyRepository;
+import br.gov.inmetro.beacon.input.randomness.entropy.EntropyDto;
 import br.gov.inmetro.beacon.input.randomness.noise.INoiseService;
-import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +41,7 @@ public class EntropySourceScheduling {
 //    @Scheduled(cron = "*/60 * * * * *")
     public void getNoise() {
 
-        NoiseDto noiseDto = null;
+        EntropyDto noiseDto = null;
         Entropy saved = null;
 
         try {

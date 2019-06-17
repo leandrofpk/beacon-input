@@ -54,6 +54,9 @@ public class Entropy {
     @NotNull
     private OriginEnum origin;
 
+    @NotNull
+    private String noiseSource;
+
     private boolean sent = true;
 
     Entropy sentRemote(boolean value){
@@ -61,4 +64,8 @@ public class Entropy {
         return this;
     }
 
+    public Entropy setSent(boolean sent) {
+        this.sent = sent;
+        return this;
+    }
 }

@@ -2,12 +2,14 @@ package br.gov.inmetro.beacon.input.queue;
 
 import br.gov.inmetro.beacon.input.randomness.entropy.Entropy;
 import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyRepository;
+import br.gov.inmetro.beacon.input.randomness.entropy.EntropyDto;
 import br.gov.inmetro.beacon.input.randomness.noise.INoiseService;
-import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Component
 @EnableScheduling
@@ -27,12 +29,12 @@ public class QueueScheduling {
     }
 
     @Scheduled(cron = "10 * * * * *")
-    public void processar() throws Exception {
-        NoiseDto noiseDto = noiseService.getNoise();
+    public void runRegular() throws Exception {
+        EntropyDto noiseDto = noiseService.getNoise();
         Entropy saved = entropyRepository.save(noiseDto);
 
         try {
-            beaconQueueSender.send(noiseDto);
+            beaconQueueSender.sendRegular(noiseDto);
         } catch (Exception e){
             entropyRepository.sent(saved.getId(), false);
             e.printStackTrace();
@@ -40,13 +42,30 @@ public class QueueScheduling {
 
     }
 
+    @Scheduled(cron = "01 * * * * *")
+    public void runSync() {
+        List<EntropyDto> notSentDto = entropyRepository.getNotSentDto();
+
+        if (notSentDto.isEmpty()) return;
+
+        try {
+            beaconQueueSender.sendSync(notSentDto);
+            entropyRepository.sentDto(notSentDto);
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
+
 //    @Scheduled(cron = "15 * * * * *")
     public void testeUm() throws Exception {
-        NoiseDto noiseDto = noiseService.getNoise("2");
+        EntropyDto noiseDto = noiseService.getNoise("2");
         Entropy saved = entropyRepository.save(noiseDto);
 
         try {
-            beaconQueueSender.send(noiseDto);
+            beaconQueueSender.sendRegular(noiseDto);
         } catch (Exception e){
             entropyRepository.sent(saved.getId(), false);
             e.printStackTrace();

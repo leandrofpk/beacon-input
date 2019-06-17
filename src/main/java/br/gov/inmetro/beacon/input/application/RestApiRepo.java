@@ -1,6 +1,6 @@
 package br.gov.inmetro.beacon.input.application;
 
-import br.gov.inmetro.beacon.input.randomness.noise.NoiseDto;
+import br.gov.inmetro.beacon.input.randomness.entropy.EntropyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -28,12 +28,12 @@ public class RestApiRepo {
     }
 
 
-    public ResponseEntity<String> send(NoiseDto noiseDto) {
+    public ResponseEntity<String> send(EntropyDto noiseDto) {
         return restTemplate.postForEntity(uri, noiseDto, String.class);
     }
 
-    public ResponseEntity<String> send(List<NoiseDto> noises) {
-//        return restTemplate.postForEntity(uri, noises, List<NoiseDto>.class);
+    public ResponseEntity<String> send(List<EntropyDto> noises) {
+//        return restTemplate.postForEntity(uri, noises, List<EntropyDto>.class);
         return restTemplate.postForObject(uri + "/sync", noises, ResponseEntity.class);
     }
 

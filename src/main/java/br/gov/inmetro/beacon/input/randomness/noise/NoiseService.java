@@ -1,5 +1,6 @@
 package br.gov.inmetro.beacon.input.randomness.noise;
 
+import br.gov.inmetro.beacon.input.randomness.entropy.EntropyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -21,28 +22,28 @@ class NoiseService implements INoiseService {
         this.env = env;
     }
 
-    public NoiseDto getNoise() throws Exception {
+    public EntropyDto getNoise() throws Exception {
         final String noise512Bits = noiseSource.getNoise512Bits();
 
-        NoiseDto noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+        EntropyDto noiseDto = new EntropyDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                 noise512Bits, env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
 
         return noiseDto;
     }
 
-    public NoiseDto getNoise(String beaconNoiseSource) throws Exception {
+    public EntropyDto getNoise(String beaconNoiseSource) throws Exception {
         final String noise512Bits = noiseSource.getNoise512Bits();
 
-        NoiseDto noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+        EntropyDto noiseDto = new EntropyDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                 noise512Bits, env.getProperty("beacon.entropy.chain"), "60", beaconNoiseSource);
 
         return noiseDto;
     }
 
-    public NoiseDto getNoise(String chain, String beaconNoiseSource) throws Exception {
+    public EntropyDto getNoise(String chain, String beaconNoiseSource) throws Exception {
         final String noise512Bits = noiseSource.getNoise512Bits();
 
-        NoiseDto noiseDto = new NoiseDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+        EntropyDto noiseDto = new EntropyDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
                 noise512Bits, chain, "60", beaconNoiseSource);
 
         return noiseDto;

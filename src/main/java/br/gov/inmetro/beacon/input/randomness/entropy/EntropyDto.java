@@ -1,4 +1,4 @@
-package br.gov.inmetro.beacon.input.randomness.noise;
+package br.gov.inmetro.beacon.input.randomness.entropy;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -8,7 +8,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 
 @Data
-public class NoiseDto implements Serializable {
+public class EntropyDto implements Serializable {
+
+    private final Long id;
 
     private final String rawData;
 
@@ -23,8 +25,9 @@ public class NoiseDto implements Serializable {
 
     private final Long timeStamp;
 
-    public NoiseDto(LocalDateTime timeStamp, String rawData, String chain,
-                    String frequency, String noiseSource) {
+    public EntropyDto(LocalDateTime timeStamp, String rawData, String chain,
+                      String frequency, String noiseSource) {
+        this.id = null;
         this.timeStampDateTime = timeStamp;
         this.rawData = rawData;
         this.chain = chain;
@@ -33,9 +36,19 @@ public class NoiseDto implements Serializable {
         this.noiseSource = noiseSource;
     }
 
+    public EntropyDto(Entropy entropy){
+        this.id = entropy.getId();
+        this.timeStamp = entropy.getUnixTimeStamp();
+        this.chain = entropy.getChain();
+        this.frequency = entropy.getFrequency();
+        this.noiseSource = entropy.getNoiseSource();
+        this.rawData = entropy.getRawData();
+        this.timeStampDateTime = entropy.getTimeStamp();
+    }
+
     @Override
     public String toString() {
-        return "NoiseDto{" +
+        return "EntropyDto{" +
                 "rawData='" + rawData + '\'' +
                 ", chain='" + chain + '\'' +
                 ", frequency='" + frequency + '\'' +
