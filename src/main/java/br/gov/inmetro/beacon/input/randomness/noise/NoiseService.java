@@ -15,7 +15,6 @@ class NoiseService implements INoiseService {
 
     private final Environment env;
 
-
     @Autowired
     NoiseService(INoiseSource noiseSource, Environment env) {
         this.noiseSource = noiseSource;
@@ -25,7 +24,7 @@ class NoiseService implements INoiseService {
     public EntropyDto getNoise() throws Exception {
         final String noise512Bits = noiseSource.getNoise512Bits();
 
-        EntropyDto noiseDto = new EntropyDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+        EntropyDto noiseDto = new EntropyDto(getDateTime(),
                 noise512Bits, env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
 
         return noiseDto;
@@ -34,7 +33,7 @@ class NoiseService implements INoiseService {
     public EntropyDto getNoise(String beaconNoiseSource) throws Exception {
         final String noise512Bits = noiseSource.getNoise512Bits();
 
-        EntropyDto noiseDto = new EntropyDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+        EntropyDto noiseDto = new EntropyDto(getDateTime(),
                 noise512Bits, env.getProperty("beacon.entropy.chain"), "60", beaconNoiseSource);
 
         return noiseDto;
@@ -43,10 +42,14 @@ class NoiseService implements INoiseService {
     public EntropyDto getNoise(String chain, String beaconNoiseSource) throws Exception {
         final String noise512Bits = noiseSource.getNoise512Bits();
 
-        EntropyDto noiseDto = new EntropyDto(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES),
+        EntropyDto noiseDto = new EntropyDto(getDateTime(),
                 noise512Bits, chain, "60", beaconNoiseSource);
 
         return noiseDto;
+    }
+
+    private LocalDateTime getDateTime(){
+        return LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).plus(1,ChronoUnit.MINUTES);
     }
 
 }
