@@ -57,20 +57,4 @@ public class QueueScheduling {
 
     }
 
-
-
-//    @Scheduled(cron = "15 * * * * *")
-    public void testeUm() throws Exception {
-        EntropyDto noiseDto = noiseService.getNoise("2");
-        Entropy saved = entropyRepository.save(noiseDto);
-
-        try {
-            beaconQueueSender.sendRegular(noiseDto);
-        } catch (Exception e){
-            entropyRepository.sent(saved.getId(), false);
-            e.printStackTrace();
-        }
-
-    }
-
 }
