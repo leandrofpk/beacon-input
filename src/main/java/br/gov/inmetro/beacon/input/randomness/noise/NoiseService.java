@@ -5,7 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
 @Component
@@ -25,31 +26,20 @@ class NoiseService implements INoiseService {
         final String noise512Bits = noiseSource.getNoise512Bits();
 
         EntropyDto noiseDto = new EntropyDto(getDateTime(),
-                noise512Bits, env.getProperty("beacon.entropy.chain"), "60", env.getProperty("beacon.noise-source"));
+                noise512Bits, env.getProperty("beacon.entropy.chain"),
+                Integer.parseInt(env.getProperty("beacon.period")),
+                Byte.parseByte(env.getProperty("beacon.noise-source")));
 
         return noiseDto;
     }
 
-    public EntropyDto getNoise(String beaconNoiseSource) throws Exception {
-        final String noise512Bits = noiseSource.getNoise512Bits();
+    private ZonedDateTime getDateTime(){
+        ZonedDateTime now = ZonedDateTime.now()
+                .truncatedTo(ChronoUnit.MINUTES)
+                .plus(1, ChronoUnit.MINUTES)
+                .withZoneSameInstant((ZoneOffset.UTC).normalized());
 
-        EntropyDto noiseDto = new EntropyDto(getDateTime(),
-                noise512Bits, env.getProperty("beacon.entropy.chain"), "60", beaconNoiseSource);
-
-        return noiseDto;
-    }
-
-    public EntropyDto getNoise(String chain, String beaconNoiseSource) throws Exception {
-        final String noise512Bits = noiseSource.getNoise512Bits();
-
-        EntropyDto noiseDto = new EntropyDto(getDateTime(),
-                noise512Bits, chain, "60", beaconNoiseSource);
-
-        return noiseDto;
-    }
-
-    private LocalDateTime getDateTime(){
-        return LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES).plus(1,ChronoUnit.MINUTES);
+        return now;
     }
 
 }

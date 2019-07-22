@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 @Entity
 @Data
@@ -21,41 +22,16 @@ public class Entropy {
     private String rawData;
 
     @NotNull
-    private String chain;
-
-    @Length(max = 20)
-    private String versionBeacon;
+    private int period;
 
     @NotNull
-    private String frequency;
+    private ZonedDateTime timeStamp;
 
     @NotNull
-    @DateTimeFormat(pattern = "dd/MM/yyyy hh:mm a")
-    private LocalDateTime timeStamp;
-
-    private Long unixTimeStamp;
-
-    @Lob
-    private String seedValue;
-
-    @Lob
-    private String previousOutputValue;
-
-    @Lob
-    private String signatureValue;
-
-    @Lob
-    private String outputValue;
-
-    @Length(max = 20)
-    private String statusCode;
-
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private OriginEnum origin;
+    private String deviceDescription;
 
     @NotNull
-    private String noiseSource;
+    private byte noiseSource;
 
     private boolean sent = true;
 

@@ -5,7 +5,6 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,16 +25,12 @@ public class EntropyRepository implements IEntropyRepository {
     @Override
     @Transactional
     public Entropy save(EntropyDto dto) {
-
         Entropy entropy = new Entropy();
 
-        entropy.setChain(dto.getChain());
         entropy.setRawData(dto.getRawData());
-        entropy.setFrequency("60");
-        entropy.setTimeStamp(dto.getTimeStampDateTime());
-        entropy.setVersionBeacon(env.getProperty("beacon.version"));
-        entropy.setOrigin(OriginEnum.COMSCIRE_PQ32MS);
-        entropy.setUnixTimeStamp(entropy.getTimeStamp().atZone(ZoneId.of("America/Sao_Paulo")).toInstant().toEpochMilli());
+        entropy.setPeriod(Integer.parseInt(env.getProperty("beacon.period")));
+        entropy.setTimeStamp(dto.getTimeStamp());
+        entropy.setDeviceDescription(env.getProperty("beacon.entropy.device.description"));
         entropy.setNoiseSource(dto.getNoiseSource());
 
         return entropies.save(entropy);

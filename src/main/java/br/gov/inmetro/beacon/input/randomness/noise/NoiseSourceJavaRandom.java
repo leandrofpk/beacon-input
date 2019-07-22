@@ -13,7 +13,8 @@ class NoiseSourceJavaRandom implements INoiseSource {
     @Override
     public String getNoise512Bits() throws Exception {
         byte[] bytes = new byte[64];
-        SecureRandom.getInstance("NativePRNG").nextBytes(bytes);
+//        SecureRandom.getInstance("NativePRNG").nextBytes(bytes);
+        SecureRandom.getInstance("SHA1PRNG").nextBytes(bytes);
         return bytesToHex(bytes);
     }
 
