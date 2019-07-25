@@ -5,6 +5,8 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +31,7 @@ public class EntropyRepository implements IEntropyRepository {
 
         entropy.setRawData(dto.getRawData());
         entropy.setPeriod(Integer.parseInt(env.getProperty("beacon.period")));
-        entropy.setTimeStamp(dto.getTimeStamp());
+        entropy.setTimeStamp(ZonedDateTime.parse(dto.getTimeStamp(), DateTimeFormatter.ISO_DATE_TIME));
         entropy.setDeviceDescription(env.getProperty("beacon.entropy.device.description"));
         entropy.setNoiseSource(dto.getNoiseSource());
 

@@ -1,5 +1,6 @@
 package br.gov.inmetro.beacon.input.randomness.entropy;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.time.ZonedDateTime;
 @Data
 public class EntropyDto implements Serializable {
 
+    @JsonIgnore
     private final Long id;
 
     private final String rawData;
@@ -16,9 +18,9 @@ public class EntropyDto implements Serializable {
 
     private final byte noiseSource;
 
-    private final ZonedDateTime timeStamp;
+    private final String timeStamp;
 
-    public EntropyDto(ZonedDateTime timeStamp, String rawData, String chain,
+    public EntropyDto(String timeStamp, String rawData, String chain,
                       int period, byte noiseSource) {
         this.id = null;
         this.timeStamp = timeStamp;
@@ -29,7 +31,7 @@ public class EntropyDto implements Serializable {
 
     public EntropyDto(Entropy entropy){
         this.id = entropy.getId();
-        this.timeStamp = entropy.getTimeStamp();
+        this.timeStamp = entropy.getTimeStamp().toString();
         this.period = entropy.getPeriod();
         this.noiseSource = entropy.getNoiseSource();
         this.rawData = entropy.getRawData();

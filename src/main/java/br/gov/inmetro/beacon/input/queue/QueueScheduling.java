@@ -1,9 +1,12 @@
 package br.gov.inmetro.beacon.input.queue;
 
+import br.gov.inmetro.beacon.input.BeaconInputApplication;
 import br.gov.inmetro.beacon.input.randomness.entropy.Entropy;
 import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyRepository;
 import br.gov.inmetro.beacon.input.randomness.entropy.EntropyDto;
 import br.gov.inmetro.beacon.input.randomness.noise.INoiseService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,6 +24,8 @@ public class QueueScheduling {
 
     private final IEntropyRepository entropyRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(QueueScheduling.class);
+
     @Autowired
     public QueueScheduling(BeaconPulseQueueSender orderQueueSender, INoiseService noiseService, IEntropyRepository entropyService) {
         this.beaconQueueSender = orderQueueSender;
@@ -35,6 +40,8 @@ public class QueueScheduling {
 
         try {
             beaconQueueSender.sendRegular(noiseDto);
+            logger.warn(noiseDto.toString());
+
         } catch (Exception e){
             entropyRepository.sent(saved.getId(), false);
             e.printStackTrace();

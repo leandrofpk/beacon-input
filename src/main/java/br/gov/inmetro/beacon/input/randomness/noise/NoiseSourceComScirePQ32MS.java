@@ -21,7 +21,7 @@ class NoiseSourceComScirePQ32MS implements INoiseSource {
     @Value("${beacon.entropy.command}")
     private String command;
 
-    private static final Logger logger = LoggerFactory.getLogger(BeaconInputApplication.class);
+    private static final Logger logger = LoggerFactory.getLogger(NoiseSourceComScirePQ32MS.class);
 
     @Override
     public String getNoise512Bits() throws NoiseSourceReadError {
