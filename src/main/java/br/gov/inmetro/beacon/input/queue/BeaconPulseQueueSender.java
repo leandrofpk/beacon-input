@@ -12,11 +12,11 @@ public class BeaconPulseQueueSender {
 
     private final RabbitTemplate rabbitTemplate;
 
-    private static final String EXCHANGE = "beacon2_pulse_data";
+    private static final String EXCHANGE = "beacon_pulse_data";
 
-    private static final String ROUTING_KEY_REGULAR = "pulse2.regular";
+    private static final String ROUTING_KEY_REGULAR = "pulse.regular";
 
-    private static final String ROUTING_KEY_SYNC = "pulse2.sync";
+    private static final String ROUTING_KEY_SYNC = "pulse.sync";
 
     @Autowired
     public BeaconPulseQueueSender(RabbitTemplate rabbitTemplate) {
