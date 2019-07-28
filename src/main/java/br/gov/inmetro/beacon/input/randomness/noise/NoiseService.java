@@ -26,7 +26,7 @@ class NoiseService implements INoiseService {
         final String noise512Bits = noiseSource.getNoise512Bits();
 
         EntropyDto noiseDto = new EntropyDto(getDateTime().toString(),
-                noise512Bits, env.getProperty("beacon.entropy.chain"),
+                noise512Bits,
                 Integer.parseInt(env.getProperty("beacon.period")),
                 Byte.parseByte(env.getProperty("beacon.noise-source")));
 

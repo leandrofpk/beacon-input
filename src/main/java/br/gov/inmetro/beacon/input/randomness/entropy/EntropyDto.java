@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 
 @Data
 public class EntropyDto implements Serializable {
@@ -20,7 +19,7 @@ public class EntropyDto implements Serializable {
 
     private final String timeStamp;
 
-    public EntropyDto(String timeStamp, String rawData, String chain,
+    public EntropyDto(String timeStamp, String rawData,
                       int period, byte noiseSource) {
         this.id = null;
         this.timeStamp = timeStamp;

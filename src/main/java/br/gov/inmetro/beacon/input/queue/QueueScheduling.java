@@ -33,7 +33,7 @@ public class QueueScheduling {
         this.entropyRepository = entropyService;
     }
 
-    @Scheduled(cron = "10 * * * * *")
+    @Scheduled(cron = "50 * * * * *")
     public void runRegular() throws Exception {
         EntropyDto noiseDto = noiseService.getNoise();
         Entropy saved = entropyRepository.save(noiseDto);
