@@ -1,9 +1,8 @@
 package br.gov.inmetro.beacon.input.queue;
 
-import br.gov.inmetro.beacon.input.BeaconInputApplication;
 import br.gov.inmetro.beacon.input.randomness.entropy.Entropy;
-import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyRepository;
 import br.gov.inmetro.beacon.input.randomness.entropy.EntropyDto;
+import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyRepository;
 import br.gov.inmetro.beacon.input.randomness.noise.INoiseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +48,7 @@ public class QueueScheduling {
 
     }
 
-    @Scheduled(cron = "01 * * * * *")
+    @Scheduled(cron = "51 * * * * *")
     public void runSync() {
         List<EntropyDto> notSentDto = entropyRepository.getNotSentDto();
 

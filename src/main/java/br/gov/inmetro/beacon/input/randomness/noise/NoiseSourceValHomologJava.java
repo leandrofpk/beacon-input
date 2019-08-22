@@ -1,19 +1,27 @@
 package br.gov.inmetro.beacon.input.randomness.noise;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.security.SecureRandom;
 
 @Component
-@Profile("default")
-class NoiseSourceJavaRandom implements INoiseSource {
+@Profile({"validacao","homolog"})
+class NoiseSourceValHomologJava implements INoiseSource {
+
+    private final Environment environment;
+
+    @Autowired
+    NoiseSourceValHomologJava(Environment environment) {
+        this.environment = environment;
+    }
 
     @Override
     public String getNoise512Bits() throws Exception {
         byte[] bytes = new byte[64];
-//        SecureRandom.getInstance("NativePRNG").nextBytes(bytes);
-        SecureRandom.getInstance("SHA1PRNG").nextBytes(bytes);
+        SecureRandom.getInstance("NativePRNG").nextBytes(bytes);
         return bytesToHex(bytes);
     }
 
