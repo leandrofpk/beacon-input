@@ -14,7 +14,7 @@ public class NoiseSourceJavaRandomTest {
     public void teste() throws NoSuchAlgorithmException {
 
         byte[] bytes = new byte[64];
-        SecureRandom.getInstance("NativePRNG").nextBytes(bytes);
+        SecureRandom.getInstance("SHA1PRNG").nextBytes(bytes);
 
         System.out.println(bytesToHex(bytes));
 
