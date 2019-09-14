@@ -36,7 +36,7 @@ class NoiseService implements INoiseService {
     private ZonedDateTime getDateTime(){
         ZonedDateTime now = ZonedDateTime.now()
                 .truncatedTo(ChronoUnit.MINUTES)
-                .plus(1, ChronoUnit.MINUTES)
+                .plus(2, ChronoUnit.MINUTES)
                 .withZoneSameInstant((ZoneOffset.UTC).normalized());
 
         return now;
