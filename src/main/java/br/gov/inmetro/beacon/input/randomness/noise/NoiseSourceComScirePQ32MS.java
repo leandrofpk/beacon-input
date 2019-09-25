@@ -1,6 +1,5 @@
 package br.gov.inmetro.beacon.input.randomness.noise;
 
-import br.gov.inmetro.beacon.input.BeaconInputApplication;
 import br.gov.inmetro.beacon.input.exceptions.NoiseSourceReadError;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
