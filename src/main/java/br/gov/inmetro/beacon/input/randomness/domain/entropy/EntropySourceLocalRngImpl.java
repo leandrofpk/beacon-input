@@ -1,4 +1,4 @@
-package br.gov.inmetro.beacon.input.randomness.noise;
+package br.gov.inmetro.beacon.input.randomness.domain.entropy;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
@@ -8,21 +8,23 @@ import org.springframework.stereotype.Component;
 import java.security.SecureRandom;
 
 @Component
-@Profile({"validacao","homolog"})
-class NoiseSourceValHomologJava implements INoiseSource {
+@Profile("default")
+class EntropySourceLocalRngImpl implements IEntropySource {
 
-    private final Environment environment;
+    private final Environment env;
+
+    private static final String DESCRIPTION = "LocalRNG";
 
     @Autowired
-    NoiseSourceValHomologJava(Environment environment) {
-        this.environment = environment;
+    EntropySourceLocalRngImpl(Environment env) {
+        this.env = env;
     }
 
     @Override
-    public String getNoise512Bits() throws Exception {
+    public EntropySourceDto getNoise512Bits() throws Exception {
         byte[] bytes = new byte[64];
-        SecureRandom.getInstance("NativePRNG").nextBytes(bytes);
-        return bytesToHex(bytes);
+        SecureRandom.getInstance(env.getProperty("beacon.entropy.local.rng")).nextBytes(bytes);
+        return new EntropySourceDto(bytesToHex(bytes), DESCRIPTION);
     }
 
     private String bytesToHex(byte[] hash) {

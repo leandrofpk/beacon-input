@@ -1,5 +1,6 @@
-package br.gov.inmetro.beacon.input.randomness.entropy;
+package br.gov.inmetro.beacon.input.randomness.domain;
 
+import br.gov.inmetro.beacon.input.randomness.infra.Entropy;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -19,13 +20,16 @@ public class EntropyDto implements Serializable {
 
     private final String timeStamp;
 
+    private final String description;
+
     public EntropyDto(String timeStamp, String rawData,
-                      int period, byte noiseSource) {
+                      int period, byte noiseSource, String description) {
         this.id = null;
         this.timeStamp = timeStamp;
         this.rawData = rawData;
         this.period = period;
         this.noiseSource = noiseSource;
+        this.description = description;
     }
 
     public EntropyDto(Entropy entropy){
@@ -34,6 +38,7 @@ public class EntropyDto implements Serializable {
         this.period = entropy.getPeriod();
         this.noiseSource = entropy.getNoiseSource();
         this.rawData = entropy.getRawData();
+        this.description = entropy.getDeviceDescription();
     }
 
     @Override
@@ -43,7 +48,8 @@ public class EntropyDto implements Serializable {
                 ", rawData='" + rawData + '\'' +
                 ", period=" + period +
                 ", noiseSource=" + noiseSource +
-                ", timeStamp=" + timeStamp +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

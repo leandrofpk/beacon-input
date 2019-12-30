@@ -1,6 +1,6 @@
 package br.gov.inmetro.beacon.input.queue;
 
-import br.gov.inmetro.beacon.input.randomness.entropy.EntropyDto;
+import br.gov.inmetro.beacon.input.randomness.domain.EntropyDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class BeaconPulseQueueSender {
+public class BeaconEntropyQueueSender {
 
     private final RabbitTemplate rabbitTemplate;
 
@@ -19,7 +19,7 @@ public class BeaconPulseQueueSender {
     private static final String ROUTING_KEY_SYNC = "pulse.sync";
 
     @Autowired
-    public BeaconPulseQueueSender(RabbitTemplate rabbitTemplate) {
+    public BeaconEntropyQueueSender(RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 

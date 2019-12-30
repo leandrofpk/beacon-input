@@ -1,8 +1,5 @@
-package br.gov.inmetro.beacon.input.randomness.noise;
+package br.gov.inmetro.beacon.input.randomness.domain.entropy;
 
-import br.gov.inmetro.beacon.input.exceptions.NoiseSourceReadError;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -15,15 +12,18 @@ import java.io.InputStreamReader;
 */
 @Component
 @Profile({"producao", "test"})
-class NoiseSourceComScirePQ32MS implements INoiseSource {
+class EntropySourceComScirePQ32MSImpl implements IEntropySource {
 
     @Value("${beacon.entropy.command}")
     private String command;
 
-    private static final Logger logger = LoggerFactory.getLogger(NoiseSourceComScirePQ32MS.class);
+    @Value("${beacon.entropy.command.return.line}")
+    private String lineReturn;
+
+    private static final String DESCRIPTION = "device";
 
     @Override
-    public String getNoise512Bits() throws NoiseSourceReadError {
+    public EntropySourceDto getNoise512Bits() throws NoiseSourceReadException {
         String s;
 
         try {
@@ -40,27 +40,29 @@ class NoiseSourceComScirePQ32MS implements INoiseSource {
 //
 //            if (StringUtils.isEmpty(collect)){
 ////                logger.error("DEVICE: device not available");
-//                throw new NoiseSourceReadError("Device not available");
+//                throw new NoiseSourceReadException("Device not available");
 //            }
 
             while ((s = stdInput.readLine()) != null) {
 //                logger.warn("S:" + s);
-                if (linha == 57){
-                    return s.replaceAll(" ", "");
+//                if (linha == 57){
+                if (linha == Integer.parseInt(lineReturn)){
+//                    return s.replaceAll(" ", "");
+                    return new EntropySourceDto(s.replaceAll(" ", ""), DESCRIPTION);
                 }
                 linha++;
             }
 
 //            logger.warn("Linha:" + linha);
             if (linha == 1){
-                throw new NoiseSourceReadError("Device not available");
+                throw new NoiseSourceReadException("Device not available");
             }
 
         } catch (Exception e){
-            throw new NoiseSourceReadError(e.getMessage());
+            throw new NoiseSourceReadException(e.getMessage());
         }
 
-        return s;
+        return null;
     }
 
 }

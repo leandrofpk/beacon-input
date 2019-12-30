@@ -1,4 +1,4 @@
-package br.gov.inmetro.beacon.input.randomness.entropy;
+package br.gov.inmetro.beacon.input.randomness.infra;
 
 import lombok.Data;
 
@@ -32,7 +32,7 @@ public class Entropy {
 
     private boolean sent = true;
 
-    Entropy sentRemote(boolean value){
+    public Entropy sentRemote(boolean value){
         this.sent = value;
         return this;
     }

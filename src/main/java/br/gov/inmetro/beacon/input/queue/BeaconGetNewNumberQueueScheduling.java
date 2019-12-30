@@ -1,9 +1,9 @@
 package br.gov.inmetro.beacon.input.queue;
 
-import br.gov.inmetro.beacon.input.randomness.entropy.Entropy;
-import br.gov.inmetro.beacon.input.randomness.entropy.EntropyDto;
-import br.gov.inmetro.beacon.input.randomness.entropy.IEntropyRepository;
-import br.gov.inmetro.beacon.input.randomness.noise.INoiseService;
+import br.gov.inmetro.beacon.input.randomness.application.IEntropyAppService;
+import br.gov.inmetro.beacon.input.randomness.domain.EntropyDto;
+import br.gov.inmetro.beacon.input.randomness.infra.Entropy;
+import br.gov.inmetro.beacon.input.randomness.repository.IEntropyRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,26 +15,28 @@ import java.util.List;
 
 @Component
 @EnableScheduling
-public class QueueScheduling {
+public class BeaconGetNewNumberQueueScheduling {
 
-    private final BeaconPulseQueueSender beaconQueueSender;
+    private final BeaconEntropyQueueSender beaconQueueSender;
 
-    private final INoiseService noiseService;
+    private final IEntropyAppService entropyAppService;
 
     private final IEntropyRepository entropyRepository;
 
-    private static final Logger logger = LoggerFactory.getLogger(QueueScheduling.class);
+    private static final Logger logger = LoggerFactory.getLogger(BeaconGetNewNumberQueueScheduling.class);
 
     @Autowired
-    public QueueScheduling(BeaconPulseQueueSender orderQueueSender, INoiseService noiseService, IEntropyRepository entropyService) {
+    public BeaconGetNewNumberQueueScheduling(BeaconEntropyQueueSender orderQueueSender,
+                                             IEntropyAppService entropyAppService,
+                                             IEntropyRepository entropyService) {
         this.beaconQueueSender = orderQueueSender;
-        this.noiseService = noiseService;
+        this.entropyAppService = entropyAppService;
         this.entropyRepository = entropyService;
     }
 
     @Scheduled(cron = "50 * * * * *")
     public void runRegular() throws Exception {
-        EntropyDto noiseDto = noiseService.getNoise();
+        EntropyDto noiseDto = entropyAppService.getNoise512Bits();
         Entropy saved = entropyRepository.save(noiseDto);
 
         try {

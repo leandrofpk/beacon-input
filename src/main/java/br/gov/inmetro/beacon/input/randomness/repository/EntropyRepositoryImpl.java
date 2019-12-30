@@ -1,5 +1,8 @@
-package br.gov.inmetro.beacon.input.randomness.entropy;
+package br.gov.inmetro.beacon.input.randomness.repository;
 
+import br.gov.inmetro.beacon.input.randomness.domain.repository.Entropies;
+import br.gov.inmetro.beacon.input.randomness.infra.Entropy;
+import br.gov.inmetro.beacon.input.randomness.domain.EntropyDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
@@ -12,14 +15,14 @@ import java.util.Collections;
 import java.util.List;
 
 @Component
-public class EntropyRepository implements IEntropyRepository {
+public class EntropyRepositoryImpl implements IEntropyRepository {
 
-    private Entropies entropies;
+    private final Entropies entropies;
 
-    private Environment env;
+    private final Environment env;
 
     @Autowired
-    public EntropyRepository(Entropies entropies, Environment env) {
+    public EntropyRepositoryImpl(Entropies entropies, Environment env) {
         this.entropies = entropies;
         this.env = env;
     }
@@ -32,7 +35,7 @@ public class EntropyRepository implements IEntropyRepository {
         entropy.setRawData(dto.getRawData());
         entropy.setPeriod(Integer.parseInt(env.getProperty("beacon.period")));
         entropy.setTimeStamp(ZonedDateTime.parse(dto.getTimeStamp(), DateTimeFormatter.ISO_DATE_TIME));
-        entropy.setDeviceDescription(env.getProperty("beacon.entropy.device.description"));
+        entropy.setDeviceDescription(dto.getDescription());
         entropy.setNoiseSource(dto.getNoiseSource());
 
         return entropies.save(entropy);
@@ -44,19 +47,8 @@ public class EntropyRepository implements IEntropyRepository {
     }
 
     @Transactional
-    public void sent(List<Entropy> notSent){
-        notSent.forEach(entropy -> entropy.setSent(true));
-        entropies.saveAll(notSent);
-    }
-
-    @Transactional
     public void sentDto(List<EntropyDto> notSent){
         notSent.forEach(entropy -> entropies.findById(entropy.getId()).get().setSent(true));
-    }
-
-    @Transactional(readOnly = true)
-    public List<Entropy> getNotSent(){
-        return entropies.findBySentOrderById(false);
     }
 
     @Transactional(readOnly = true)
@@ -65,7 +57,5 @@ public class EntropyRepository implements IEntropyRepository {
         entropies.findBySentOrderById(false).forEach(entropy -> list.add(new EntropyDto(entropy)));
         return Collections.unmodifiableList(list);
     }
-
-
 
 }
