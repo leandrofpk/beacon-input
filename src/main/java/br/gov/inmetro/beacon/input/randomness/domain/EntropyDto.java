@@ -20,6 +20,7 @@ public class EntropyDto implements Serializable {
 
     private final String timeStamp;
 
+    @JsonIgnore
     private final String description;
 
     public EntropyDto(String timeStamp, String rawData,
