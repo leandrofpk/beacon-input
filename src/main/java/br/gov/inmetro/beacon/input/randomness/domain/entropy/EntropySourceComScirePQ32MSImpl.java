@@ -1,5 +1,7 @@
 package br.gov.inmetro.beacon.input.randomness.domain.entropy;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,8 @@ class EntropySourceComScirePQ32MSImpl implements IEntropySource {
     private String lineReturn;
 
     private static final String DESCRIPTION = "device";
+
+    private static final Logger logger = LoggerFactory.getLogger(EntropySourceComScirePQ32MSImpl.class);
 
     @Override
     public EntropySourceDto getNoise512Bits() throws NoiseSourceReadException {
@@ -44,7 +48,7 @@ class EntropySourceComScirePQ32MSImpl implements IEntropySource {
 //            }
 
             while ((s = stdInput.readLine()) != null) {
-//                logger.warn("S:" + s);
+                logger.warn("Line:" + s);
 //                if (linha == 57){
                 if (linha == Integer.parseInt(lineReturn)){
 //                    return s.replaceAll(" ", "");

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.security.SecureRandom;
 
 @Component
-@Profile("default")
+@Profile({"default", "validacao"})
 class EntropySourceLocalRngImpl implements IEntropySource {
 
     private final Environment env;

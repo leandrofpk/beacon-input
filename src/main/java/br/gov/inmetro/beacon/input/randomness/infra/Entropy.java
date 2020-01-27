@@ -28,7 +28,7 @@ public class Entropy {
     private String deviceDescription;
 
     @NotNull
-    private byte noiseSource;
+    private String noiseSource;
 
     private boolean sent = true;
 

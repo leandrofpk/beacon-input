@@ -16,7 +16,7 @@ public class EntropyDto implements Serializable {
 
     private final int period;
 
-    private final byte noiseSource;
+    private final String noiseSource;
 
     private final String timeStamp;
 
@@ -24,7 +24,7 @@ public class EntropyDto implements Serializable {
     private final String description;
 
     public EntropyDto(String timeStamp, String rawData,
-                      int period, byte noiseSource, String description) {
+                      int period, String noiseSource, String description) {
         this.id = null;
         this.timeStamp = timeStamp;
         this.rawData = rawData;

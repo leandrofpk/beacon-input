@@ -31,7 +31,7 @@ public class EntropyAppServiceImpl implements IEntropyAppService {
         return new EntropyDto(getDateTime().toString(),
                 entropySourceDto.getRawData(),
                 Integer.parseInt(env.getProperty("beacon.period")),
-                Byte.parseByte(env.getProperty("beacon.noise-source")),
+                env.getProperty("beacon.noise-source"),
                 entropySourceDto.getDeviceDescription());
     }
 
